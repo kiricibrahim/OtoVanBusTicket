@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OtoVanModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Seat_tbl">
+          <Key>
+            <PropertyRef Name="KID" />
+          </Key>
+          <Property Name="KID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KSeatNumber" Type="int" />
+        </EntityType>
+        <EntityType Name="Ticket_tbl">
+          <Key>
+            <PropertyRef Name="YID" />
+          </Key>
+          <Property Name="YID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YName" Type="nvarchar" MaxLength="150" />
+          <Property Name="YAge" Type="int" />
+          <Property Name="Fee" Type="int" />
+          <Property Name="SeatID" Type="int" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="5" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="KalkisYeri" Type="nvarchar" MaxLength="50" />
+          <Property Name="VarisYeri" Type="nvarchar" MaxLength="50" />
+          <Property Name="IletisimNo" Type="nvarchar" MaxLength="11" />
+        </EntityType>
+        <Association Name="FK_Ticket_tbl_Seat_tbl">
+          <End Role="Seat_tbl" Type="Self.Seat_tbl" Multiplicity="0..1" />
+          <End Role="Ticket_tbl" Type="Self.Ticket_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seat_tbl">
+              <PropertyRef Name="KID" />
+            </Principal>
+            <Dependent Role="Ticket_tbl">
+              <PropertyRef Name="SeatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OtoVanModelStoreContainer">
+          <EntitySet Name="Seat_tbl" EntityType="Self.Seat_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket_tbl" EntityType="Self.Ticket_tbl" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Ticket_tbl_Seat_tbl" Association="Self.FK_Ticket_tbl_Seat_tbl">
+            <End Role="Seat_tbl" EntitySet="Seat_tbl" />
+            <End Role="Ticket_tbl" EntitySet="Ticket_tbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OtoVanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Seat_tbl">
+          <Key>
+            <PropertyRef Name="KID" />
+          </Key>
+          <Property Name="KID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KSeatNumber" Type="Int32" />
+          <NavigationProperty Name="Ticket_tbl" Relationship="Self.FK_Ticket_tbl_Seat_tbl" FromRole="Seat_tbl" ToRole="Ticket_tbl" />
+        </EntityType>
+        <EntityType Name="Ticket_tbl">
+          <Key>
+            <PropertyRef Name="YID" />
+          </Key>
+          <Property Name="YID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="YAge" Type="Int32" />
+          <Property Name="Fee" Type="Int32" />
+          <Property Name="SeatID" Type="Int32" />
+          <Property Name="Gender" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="KalkisYeri" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VarisYeri" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IletisimNo" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Seat_tbl" Relationship="Self.FK_Ticket_tbl_Seat_tbl" FromRole="Ticket_tbl" ToRole="Seat_tbl" />
+        </EntityType>
+        <Association Name="FK_Ticket_tbl_Seat_tbl">
+          <End Role="Seat_tbl" Type="Self.Seat_tbl" Multiplicity="0..1" />
+          <End Role="Ticket_tbl" Type="Self.Ticket_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seat_tbl">
+              <PropertyRef Name="KID" />
+            </Principal>
+            <Dependent Role="Ticket_tbl">
+              <PropertyRef Name="SeatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OtoVanEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Seat_tbl" EntityType="Self.Seat_tbl" />
+          <EntitySet Name="Ticket_tbl" EntityType="Self.Ticket_tbl" />
+          <AssociationSet Name="FK_Ticket_tbl_Seat_tbl" Association="Self.FK_Ticket_tbl_Seat_tbl">
+            <End Role="Seat_tbl" EntitySet="Seat_tbl" />
+            <End Role="Ticket_tbl" EntitySet="Ticket_tbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OtoVanModelStoreContainer" CdmEntityContainer="OtoVanEntities1">
+          <EntitySetMapping Name="Seat_tbl">
+            <EntityTypeMapping TypeName="OtoVanModel.Seat_tbl">
+              <MappingFragment StoreEntitySet="Seat_tbl">
+                <ScalarProperty Name="KID" ColumnName="KID" />
+                <ScalarProperty Name="KSeatNumber" ColumnName="KSeatNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_tbl">
+            <EntityTypeMapping TypeName="OtoVanModel.Ticket_tbl">
+              <MappingFragment StoreEntitySet="Ticket_tbl">
+                <ScalarProperty Name="YID" ColumnName="YID" />
+                <ScalarProperty Name="YName" ColumnName="YName" />
+                <ScalarProperty Name="YAge" ColumnName="YAge" />
+                <ScalarProperty Name="Fee" ColumnName="Fee" />
+                <ScalarProperty Name="SeatID" ColumnName="SeatID" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="KalkisYeri" ColumnName="KalkisYeri" />
+                <ScalarProperty Name="VarisYeri" ColumnName="VarisYeri" />
+                <ScalarProperty Name="IletisimNo" ColumnName="IletisimNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
